@@ -1,43 +1,68 @@
-// import React, { useState } from 'react';
-// import { createUserWithEmailAndPassword } from 'firebase/auth';
-// import { auth } from '../../config/firebase';
+import React, { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import './Login.css';
 
-// const SignUp = () => {
-//     const [email, setEmail] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [error, setError] = useState('');
+const SignUp = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+    const { signup } = useAuth();
 
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         try {
-//             await createUserWithEmailAndPassword(auth, email, password);
-//         } catch (error) {
-//             setError(error.message);
-//         }
-//     };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (password !== confirmPassword) {
+            return setError('Passwords do not match');
+        }
 
-//     return (
-//         <form onSubmit={handleSubmit}>
-//             {error && <p style={{ color: 'red' }}>{error}</p>}
-//             <div>
-//                 <input
-//                     type="email"
-//                     placeholder="Email"
-//                     value={email}
-//                     onChange={(e) => setEmail(e.target.value)}
-//                     autoComplete="email"
-//                 />
-//                 <input
-//                     type="password"
-//                     placeholder="Password"
-//                     value={password}
-//                     onChange={(e) => setPassword(e.target.value)}
-//                     autoComplete="current-password"
-//                 />
-//             </div>
-//             <button type="submit">Sign Up</button>
-//         </form>
-//     );
-// };
+        try {
+            setError('');
+            await signup(email, password);
+        } catch (error) {
+            setError('Failed to create an account: ' + error.message);
+        }
+    };
 
-// export default SignUp;
+    return (
+        <div className="login-container">
+            <h2>Create an Account</h2>
+            {error && <div className="error-message">{error}</div>}
+            
+            <form onSubmit={handleSubmit} className="login-form">
+                <div className="form-group">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Confirm Password</label>
+                    <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit" className="login-button">
+                    Sign Up
+                </button>
+            </form>
+        </div>
+    );
+};
+
+export default SignUp;
