@@ -1,4 +1,4 @@
-# Project C
+# NextQ Hire
 
 ## Description
 NextQ Hire is a human+AI interview assistant built for teams hiring outside their domain expertise. It enhances interviewer performance by generating tailored questions in real time using candidate resumes and live responses. The platform supports the full interview cycle—pre-interview preparation, live follow-up suggestions, and post-interview summaries—streamlining decision-making without increasing cognitive load.
