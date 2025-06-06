@@ -1,10 +1,20 @@
 # Project C
 
 ## Description
-AI Powered Interviewer Assistant
+NextQ Hire is a human+AI interview assistant built for teams hiring outside their domain expertise. It enhances interviewer performance by generating tailored questions in real time using candidate resumes and live responses. The platform supports the full interview cycle—pre-interview preparation, live follow-up suggestions, and post-interview summaries—streamlining decision-making without increasing cognitive load.
+
+![NextQ Hire - Generate Questions](./interview-assistant/docs/generate-questions.png)
+![NextQ Hire - Live Interview](./interview-assistant/docs/live-interview.png)
+![NextQ Hire - Interview Results](./interview-assistant/docs/interview-results.png)
 
 ## Prerequisites
-- **API KEYS NEEDED**
+### APIs Used (Sign-Up Required)
+
+- [AssemblyAI](https://www.assemblyai.com/) – for real-time transcription and speech analysis  
+- [Firebase](https://firebase.google.com/) – for backend services like authentication and Firestore  
+- [Gemini (Google AI Studio)](https://makersuite.google.com/) – for generating AI-driven content and follow-up questions  
+
+You'll need to create accounts and obtain API keys for each service to run the project.
 - Set up BlackHole (Mac) or VoiceMeeter (Windows)
 
 
@@ -15,15 +25,15 @@ AI Powered Interviewer Assistant
 
 Download BlackHole (2-ch) and run the signed PKG installer.
 
-Open **Audio MIDI Setup**: ⌘ Space ➜ type “Audio MIDI Setup”.
+Open **Audio MIDI Setup**: ⌘ Space ➜ type "Audio MIDI Setup".
 
-### 1 · Create the Multi-Output Device (“Speakers + BlackHole”)
+### 1 · Create the Multi-Output Device ("Speakers + BlackHole")
 
 | Action | Where to click |
 |--------|----------------|
-| a. Click “＋” (bottom-left) | Create Multi-Output Device |
+| a. Click "＋" (bottom-left) | Create Multi-Output Device |
 | b. Tick **Built-in Mac speaker** first, then **BlackHole 2-ch** | (order matters so volume keys keep working) |
-| c. Rename the new device | Double-click name ➜ “Speakers + BlackHole” |
+| c. Rename the new device | Double-click name ➜ "Speakers + BlackHole" |
 
 ### 2 · Make it the default speaker output
 
@@ -31,13 +41,13 @@ Right-click **Speakers + BlackHole** in the sidebar ➜ **Use This Device for So
 
 macOS will now mirror everything you hear to BlackHole while keeping your laptop speakers (or headphones) active.
 
-### 3 · Create the Aggregate Device (“HCI LLM”)
+### 3 · Create the Aggregate Device ("HCI LLM")
 
 | Action | Where to click |
 |--------|----------------|
-| a. Click “＋” again | Create Aggregate Device |
+| a. Click "＋" again | Create Aggregate Device |
 | b. Tick **Built-in Mic** and **BlackHole 2-ch** | in the right pane |
-| c. Rename the new device | “HCI LLM” |
+| c. Rename the new device | "HCI LLM" |
 
 ### 4 · Verify indexes (for your Python script)
 
@@ -73,8 +83,8 @@ Reboot Windows when prompted; this registers two virtual I/O pairs:
 - VoiceMeeter Output (VB‑Audio VoiceMeeter VAIO) – virtual recording device
 
 Route Windows system audio into VoiceMeeter:
-1. Settings › System › Sound › Output → choose “VoiceMeeter Input (VB‑Audio VoiceMeeter VAIO)” as the default output device.
-2. Launch VoiceMeeter. In the upper‑right HARDWARE OUT A1 selector choose your real speakers or headset (e.g. “Realtek Speakers”).
+1. Settings › System › Sound › Output → choose "VoiceMeeter Input (VB‑Audio VoiceMeeter VAIO)" as the default output device.
+2. Launch VoiceMeeter. In the upper‑right HARDWARE OUT A1 selector choose your real speakers or headset (e.g. "Realtek Speakers").
 
 Add your microphone:
 1. In VoiceMeeter, click HARDWARE INPUT 1 ➜ choose your USB mic or Built‑in Mic.
@@ -82,7 +92,7 @@ Add your microphone:
 
 Expose the aggregate to Python (B2 bus):
 1. In the lower‑right Master Section, enable B2 on any strips you want in the transcript (Mic + Virtual Input).
-2. Windows Settings › Sound › Input → set “VoiceMeeter Output (VB‑Audio VoiceMeeter VAIO)” as the default recording device.
+2. Windows Settings › Sound › Input → set "VoiceMeeter Output (VB‑Audio VoiceMeeter VAIO)" as the default recording device.
 
 Verify the device index for sounddevice:
 ```bash
